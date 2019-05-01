@@ -52,14 +52,13 @@ object Main {
     }
     //then do this or whatever you want...
 
-    println("People within 2000km of 0,0")
-    Person.getWithinRadius(0,0,2000).foreach(println)
+    println("People within 2000km of 0,0 Earthdistance")
+    println(Person.getWithinRadius(0,0,2000, extension = Earthdistance) ==
+    Person.getWithinRadius(0,0,2000, extension = PostGIS))
 
-    println("\nPeople")
-    println(Person.getById(11).query[Person].unique.transact(xa).unsafeRunSync)
-
-    println("\nTeeTimes within radius")
-    getTeetimesWithinRadius(0,0,2000).foreach(println)
+    println("\nTeeTimes within radius Earthdistance")
+    println(getTeetimesWithinRadius(0,0,2000, extension = Earthdistance).map(_.teetime) ==
+    getTeetimesWithinRadius(0,0,2000, extension = PostGIS).map(_.teetime))
 
     //benchmark()
 

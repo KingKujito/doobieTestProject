@@ -142,7 +142,7 @@ package object utils {
     (sql"SELECT *, "++distanceQuery2(lat, long,  extension=extension)++fr""" AS dist_in_km
     FROM facility, teetime
     WHERE """++withinQuery2(lat, long, radius, extension=extension)++fr""" AND teetime.facility = facility.id
-    ORDER BY dist_in_km LIMIT $limit""").query[FacilTeeFloat].to[List].transact(xa).unsafeRunSync
+    ORDER BY dist_in_km, time_ LIMIT $limit""").query[FacilTeeFloat].to[List].transact(xa).unsafeRunSync
   }
 
   def distanceQuery2(lat: Float, long: Float,

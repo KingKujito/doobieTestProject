@@ -27,11 +27,11 @@ object Person extends DBOperator[Person] with StandardGetters[Person] with Creat
   def getWithinRadius(lat: Float, long: Float, radius: Int, extension: Extension = defaultExtension)(implicit xa: Aux[IO, Unit])
   : List[Person] = {
     val distance = extension match {
-      case PostGIS         => fr"ST_Distance(ST_Point($lat,$long)::geography, location.geog)"
-      case Earthdistance   => fr"(point($lat, $long) <@> location.longlat)"}
+      case PostGIS         => fr"ST_Distance(ST_Point($lat,$long)::geography, location.geog, false)"
+      case Earthdistance   => fr"(point($lat, $long) <@> location.longlat)*1.60934"}
 
     val within   = extension match {
-      case PostGIS         => sql"ST_DWithin(ST_Point($lat,$long)::geography, location.geog, $radius*1000)"
+      case PostGIS         => sql"ST_DWithin(ST_Point($lat,$long)::geography, location.geog, $radius*1000, false)"
       case Earthdistance   => sql"((point($lat, $long) <@> location.longlat) * 1.60934) < $radius"}
 
     (sql"SELECT * FROM "++field++fr""", person_rel_location, location
