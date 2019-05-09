@@ -47,7 +47,7 @@ object DataGenerator {
     randomFacilities(facilities)
       .foreach(Facility.create)
 
-    Facility.getAll.query[Facility].to[List].transact(xa).unsafeRunSync
+    Facility.getAll().query[Facility].to[List].transact(xa).unsafeRunSync
       .foreach { f =>
         Teetime.create(Teetime(randomTime, f.id))
         Teetime.create(Teetime(randomTime, f.id))

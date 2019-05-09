@@ -3,7 +3,6 @@ package controllers
 import cats.effect.{ContextShift, IO}
 import doobie._
 import doobie.util.transactor.Transactor.Aux
-import doobie.implicits._
 import models._
 import utils._
 

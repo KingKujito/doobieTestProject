@@ -2,6 +2,8 @@ name := "doobieTestProject"
 
 version := "0.1"
 
+organization := "org.me"
+
 scalaVersion := "2.12.8"
 
 scalacOptions += "-Ypartial-unification" // 2.11.9+

@@ -1,14 +1,12 @@
 package models
 
-import cats.effect.IO
 import doobie.implicits._
 import doobie.util.fragment.Fragment
-import doobie.util.transactor.Transactor.Aux
 
 trait StandardGetters[A] extends Countable[A]{
   this : DBOperator[A] =>
-  def getAll: Fragment = {
-    sql"SELECT * FROM "++field
+  def getAll(limit: Option[Int] = None): Fragment = {
+    sql"SELECT * FROM "++field++{if(limit.isDefined)fr" LIMIT $limit" else fr""}
   }
 
   def getById(id : Long): Fragment = {
